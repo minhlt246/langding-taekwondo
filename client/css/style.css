@@ -34,6 +34,9 @@ https://templatemo.com/tm-600-prism-flux
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
 }
 
 body {
@@ -42,6 +45,8 @@ body {
   color: var(--text-primary);
   overflow-x: hidden;
   position: relative;
+  max-width: 100vw;
+  width: 100%;
 }
 
 /* Carbon Fiber Background Pattern */
@@ -188,6 +193,7 @@ body::after {
   position: fixed;
   top: 0;
   width: 100%;
+  max-width: 100vw;
   background: linear-gradient(
     180deg,
     rgba(18, 18, 18, 0.98) 0%,
@@ -198,6 +204,7 @@ body::after {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 1000;
   transition: all 0.3s ease;
+  overflow-x: hidden;
 }
 
 .header.scrolled {
@@ -213,6 +220,8 @@ body::after {
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -390,6 +399,9 @@ body::after {
     rgba(153, 69, 255, 0.1) 0%,
     transparent 50%
   );
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
 }
 
 .carousel-container {
@@ -399,6 +411,8 @@ body::after {
   perspective: 1200px;
   position: relative;
   padding-top: 60px;
+  overflow-x: hidden;
+  margin: 0 auto;
 }
 
 .carousel {
@@ -406,6 +420,7 @@ body::after {
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
+  overflow: visible;
 }
 
 .carousel-item {
@@ -636,6 +651,10 @@ body::after {
   );
   position: relative;
   overflow: hidden;
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .philosophy-container {
@@ -905,6 +924,10 @@ body::after {
     var(--primary-black) 100%
   );
   position: relative;
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .stats-grid {
@@ -1006,6 +1029,10 @@ body::after {
   background: var(--carbon-dark);
   position: relative;
   overflow: hidden;
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .skills-container {
@@ -1199,6 +1226,10 @@ body::after {
     var(--primary-black) 100%
   );
   position: relative;
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .contact-container {
@@ -1396,6 +1427,10 @@ a.info-item {
   background: var(--primary-black);
   border-top: 1px solid var(--metal-dark);
   position: relative;
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .footer-content {
@@ -1544,6 +1579,13 @@ a.info-item {
 }
 
 @media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
+  }
+
   .menu-toggle {
     display: flex;
   }
@@ -1576,9 +1618,40 @@ a.info-item {
     left: 0;
   }
 
+  .hero {
+    padding: 100px 10px 60px;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  .carousel-container {
+    width: 100%;
+    max-width: 100%;
+    height: 500px;
+    padding-top: 40px;
+    overflow-x: hidden;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+  }
+
+  .carousel {
+    overflow: visible;
+    width: 100%;
+  }
+
   .carousel-item {
-    width: 300px;
-    height: 460px;
+    width: 280px;
+    height: 420px;
+    max-width: calc(100vw - 40px);
+  }
+
+  .philosophy-section,
+  .stats-section,
+  .skills-section,
+  .contact-section {
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .carousel-item .card {
