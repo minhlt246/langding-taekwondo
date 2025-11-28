@@ -119,8 +119,6 @@ function initParticles () {
 
 // Initialize carousel
 let currentIndex = 0;
-const carousel = document.getElementById('carousel');
-const indicatorsContainer = document.getElementById('indicators');
 
 function createCarouselItem (data, index) {
     const item = document.createElement('div');
@@ -148,10 +146,24 @@ function createCarouselItem (data, index) {
 }
 
 function initCarousel () {
+    // Re-query elements to ensure they exist
+    const carouselEl = document.getElementById('carousel');
+    const indicatorsEl = document.getElementById('indicators');
+
+    if (!carouselEl || !indicatorsEl) {
+        console.error('Carousel elements not found', {
+            carousel: !!carouselEl,
+            indicators: !!indicatorsEl
+        });
+        return;
+    }
+
+    console.log('Initializing carousel with', portfolioData.length, 'items');
+
     // Create carousel items
     portfolioData.forEach((data, index) => {
         const item = createCarouselItem(data, index);
-        carousel.appendChild(item);
+        carouselEl.appendChild(item);
 
         // Create indicator
         const indicator = document.createElement('div');
@@ -159,9 +171,10 @@ function initCarousel () {
         if (index === 0) indicator.classList.add('active');
         indicator.dataset.index = index;
         indicator.addEventListener('click', () => goToSlide(index));
-        indicatorsContainer.appendChild(indicator);
+        indicatorsEl.appendChild(indicator);
     });
 
+    console.log('Carousel items created:', carouselEl.children.length);
     updateCarousel();
 }
 
@@ -176,10 +189,11 @@ function updateCarousel () {
         // Calculate relative position
         let offset = index - currentIndex;
 
-        // Wrap around for continuous rotation
+        // Wrap around for continuous rotation - fix logic
+        // Normalize offset to range [-totalItems/2, totalItems/2)
         if (offset > totalItems / 2) {
             offset -= totalItems;
-        } else if (offset < -totalItems / 2) {
+        } else if (offset <= -totalItems / 2) {
             offset += totalItems;
         }
 
@@ -190,7 +204,7 @@ function updateCarousel () {
         item.style.transform = '';
         item.style.opacity = '';
         item.style.zIndex = '';
-        item.style.transition = 'all 0.8s cubic-bezier(0.4, 0.0, 0.2, 1)';
+        item.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
 
         // Adjust spacing based on screen size
         let spacing1 = 400;
@@ -198,9 +212,9 @@ function updateCarousel () {
         let spacing3 = 750;
 
         if (isMobile) {
-            spacing1 = 280;  // Was 400, now 100px closer
-            spacing2 = 420;  // Was 600, now 180px closer
-            spacing3 = 550;  // Was 750, now 200px closer
+            spacing1 = 280;
+            spacing2 = 420;
+            spacing3 = 550;
         } else if (isTablet) {
             spacing1 = 340;
             spacing2 = 520;
@@ -213,7 +227,7 @@ function updateCarousel () {
             item.style.opacity = '1';
             item.style.zIndex = '10';
         } else if (absOffset === 1) {
-            // Side items
+            // Side items (immediate neighbors)
             const translateX = sign * spacing1;
             const rotation = isMobile ? 25 : 30;
             const scale = isMobile ? 0.88 : 0.85;
@@ -236,11 +250,19 @@ function updateCarousel () {
             item.style.transform = `translate(-50%, -50%) translateX(${translateX}px) translateZ(-450px) rotateY(${-sign * rotation}deg) scale(${scale})`;
             item.style.opacity = '0.3';
             item.style.zIndex = '2';
+        } else if (absOffset === 4) {
+            // Very far items - still show but more hidden
+            const translateX = sign * (spacing3 + 150);
+            const rotation = isMobile ? 45 : 50;
+            const scale = isMobile ? 0.55 : 0.5;
+            item.style.transform = `translate(-50%, -50%) translateX(${translateX}px) translateZ(-500px) rotateY(${-sign * rotation}deg) scale(${scale})`;
+            item.style.opacity = '0.2';
+            item.style.zIndex = '1';
         } else {
             // Hidden items (behind)
-            item.style.transform = 'translate(-50%, -50%) translateZ(-500px) scale(0.5)';
+            item.style.transform = 'translate(-50%, -50%) translateZ(-600px) scale(0.4)';
             item.style.opacity = '0';
-            item.style.zIndex = '1';
+            item.style.zIndex = '0';
         }
     });
 
@@ -310,32 +332,52 @@ function initSkillsGrid () {
     displaySkills();
 }
 
-// Event listeners
-document.getElementById('nextBtn').addEventListener('click', nextSlide);
-document.getElementById('prevBtn').addEventListener('click', prevSlide);
+// Initialize everything when DOM is ready
+function initializeApp () {
+    // Initialize carousel first
+    initCarousel();
 
-// Auto-rotate carousel
-setInterval(nextSlide, 5000);
+    // Then set up event listeners after carousel is initialized
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
 
-// Keyboard navigation
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') prevSlide();
-    if (e.key === 'ArrowRight') nextSlide();
-});
+    if (nextBtn) {
+        nextBtn.addEventListener('click', nextSlide);
+    }
+    if (prevBtn) {
+        prevBtn.addEventListener('click', prevSlide);
+    }
 
-// Update carousel on window resize
-let resizeTimeout;
-window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-        updateCarousel();
-    }, 250);
-});
+    // Auto-rotate carousel
+    setInterval(nextSlide, 5000);
 
-// Initialize on load
-initCarousel();
-initSkillsGrid();
-initParticles();
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') prevSlide();
+        if (e.key === 'ArrowRight') nextSlide();
+    });
+
+    // Update carousel on window resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            updateCarousel();
+        }, 250);
+    });
+
+    // Initialize other components
+    initSkillsGrid();
+    initParticles();
+}
+
+// Wait for DOM to be ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+    // DOM is already ready
+    initializeApp();
+}
 
 // Mobile menu toggle
 const menuToggle = document.getElementById('menuToggle');
