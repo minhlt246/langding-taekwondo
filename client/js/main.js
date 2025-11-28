@@ -56,7 +56,7 @@ const portfolioData = [
     },
     {
         id: 7,
-        title: 'Nguyễn Minh Anh ',
+        title: 'Bùi Minh Anh ',
         description: 'Huấn Luyện Viên , Vận Đồng Viên Quyền ',
         image: 'client/images/tt-7.jpg',
         tech: ['Đối Kháng ', 'Quyền Pháp ']
@@ -524,21 +524,92 @@ if (statsSection) {
     checkStatsVisibility(); // Check immediately on load
 }
 
-// Form submission
+// ============================================
+// FORM SUBMISSION - GỬI EMAIL VỚI NODE.JS
+// ============================================
+// Form sẽ gửi dữ liệu đến endpoint /api/contact trên server Node.js
+// Server sẽ xử lý và gửi email đến địa chỉ đã cấu hình
+
 const contactForm = document.getElementById('contactForm');
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
 
-    // Get form data
-    const formData = new FormData(contactForm);
-    const data = Object.fromEntries(formData);
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    // Show success message
-    alert(`Thank you ${data.name}! Your message has been transmitted successfully. We'll respond within 24 hours.`);
+        // Get form data
+        const formData = new FormData(contactForm);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            message: formData.get('message')
+        };
 
-    // Reset form
-    contactForm.reset();
-});
+        const submitBtn = contactForm.querySelector('.submit-btn');
+        const originalBtnText = submitBtn.textContent;
+
+        // Disable submit button and show loading state
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Đang gửi...';
+
+        try {
+            console.log('Sending form data to /api/contact');
+            console.log('Form data:', data);
+
+            // Send form data to Node.js backend
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            console.log('Response status:', response.status);
+
+            // Parse response
+            const result = await response.json();
+
+            console.log('Response result:', result);
+
+            // Check if successful
+            if (response.ok && result.success) {
+                // Show success message
+                alert(`Cảm ơn ${data.name}! Tin nhắn của bạn đã được gửi thành công. Chúng tôi sẽ phản hồi trong vòng 24 giờ.`);
+
+                // Reset form
+                contactForm.reset();
+            } else {
+                // Handle errors
+                throw new Error(result.message || 'Không thể gửi email. Vui lòng thử lại sau.');
+            }
+        } catch (error) {
+            console.error('Error sending email:', error);
+            console.error('Error details:', {
+                message: error.message,
+                stack: error.stack,
+                name: error.name
+            });
+
+            // Show error message
+            let errorMsg = 'Có lỗi xảy ra khi gửi tin nhắn.\n\n';
+
+            if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                errorMsg += 'Vấn đề: Không thể kết nối đến server.\n';
+                errorMsg += 'Giải pháp: Vui lòng kiểm tra kết nối internet và đảm bảo server đang chạy.';
+            } else {
+                errorMsg += error.message || 'Vui lòng thử lại sau hoặc liên hệ trực tiếp qua email/điện thoại.';
+            }
+
+            alert(errorMsg);
+        } finally {
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+        }
+    });
+}
 
 // Loading screen
 window.addEventListener('load', () => {

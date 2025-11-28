@@ -32,6 +32,154 @@ https://templatemo.com/tm-600-prism-flux
   --text-dim: #808080;
 }
 
+/* SVN-Poppins Font Family */
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-ThinItalic.ttf") format("truetype");
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-ExtraLightItalic.ttf")
+    format("truetype");
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-MediumItalic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-SemiBoldItalic.ttf")
+    format("truetype");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-ExtraBoldItalic.ttf")
+    format("truetype");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SVN-Poppins";
+  src: url("./SVN-Poppins/TTF/SVN-Poppins-BlackItalic.ttf") format("truetype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
@@ -40,7 +188,7 @@ html {
 }
 
 body {
-  font-family: "Orbitron", "Rajdhani", sans-serif;
+  font-family: "SVN-Poppins", "Orbitron", "Rajdhani", sans-serif;
   background: var(--primary-black);
   color: var(--text-primary);
   overflow-x: hidden;
@@ -242,7 +390,7 @@ body::after {
 .logo-prism {
   width: 100%;
   height: 100%;
-border-radius: 50%;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -482,7 +630,7 @@ border-radius: 50%;
   font-size: 72px;
   font-weight: 900;
   color: rgba(153, 69, 255, 0.1);
-  font-family: "Orbitron", monospace;
+  font-family: "SVN-Poppins", sans-serif;
 }
 
 .card-image {
@@ -514,8 +662,6 @@ border-radius: 50%;
   font-weight: 700;
   text-align: center;
   margin-bottom: 15px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   background: linear-gradient(
     135deg,
     var(--text-primary),
@@ -765,6 +911,7 @@ border-radius: 50%;
   border-radius: 20px;
   transition: all 0.4s ease;
   overflow: hidden;
+  height: 100%;
 }
 
 .pillar::before {
@@ -1006,7 +1153,7 @@ border-radius: 50%;
   font-weight: 900;
   color: var(--text-primary);
   margin-bottom: 10px;
-  font-family: "Orbitron", monospace;
+  font-family: "SVN-Poppins", sans-serif;
 }
 
 .stat-label {
