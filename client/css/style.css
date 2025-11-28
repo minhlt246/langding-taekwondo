@@ -510,8 +510,9 @@ body::after {
 }
 
 .card-title {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
+  text-align: center;
   margin-bottom: 15px;
   text-transform: uppercase;
   letter-spacing: 2px;
